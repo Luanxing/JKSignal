@@ -7,7 +7,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import HomeScreen from '../screens/Home/HomeScreen';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, HomeParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -17,19 +18,34 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneNavigator}
+        component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-nutrition" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-alarm" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-chatbubbles" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabFour"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-cog" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -69,5 +85,17 @@ function TabTwoNavigator() {
         options={{ headerTitle: 'Tab Two Title' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+const HomeStack = createStackNavigator<HomeParamList>();
+function HomeNavigator() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerTitle: 'Tab Two Title' }}
+      />
+    </HomeStack.Navigator>
   );
 }
