@@ -20,33 +20,38 @@ export default class HomeScreen extends React.Component {
       return {
         key: index,
         image: JkRes[`jk${index}`],
+        name:'沙华',
+        desc:'2',
       };
     });
   }
-  _getHeightForItem = ({ item }) => {
-    return Math.max(itemWidth, (itemWidth / item.video.width) * item.video.height);
-  };
+
 
   _renderItem = ({ item }) => {
-    const itemHeight = this._getHeightForItem({ item });
+    const itemHeight = this._getHeightForItem({item});
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => this._onPressContent(item)}
+        // onPress={() => this._onPressContent(item)}
         style={styles.item}
       >
-        <PlacehoderImage
-          source={{ uri: item.video.thumbnail[0] }}
-          placeholder={{ uri: 'placeholder' }}
+        <Image
+          source={item.image}
           style={{ width: itemWidth, height: itemHeight, borderRadius: 4 }}
         />
         <View style={styles.itemText}>
-          <Text style={{ color: '#fff' }}>{secToTime(item.video.duration)}</Text>
-          <Text style={{ color: '#fff' }}>{item.comment}</Text>
+    <Text style={{ color: '#fff' }}>{item.name}</Text>
+          <Text style={{ color: '#fff' }}>{item.desc}</Text>
         </View>
       </TouchableOpacity>
     );
   };
+  _getHeightForItem = ({item}) => {
+    const width = Image.resolveAssetSource(item.image).width;
+    const height = Image.resolveAssetSource(item.image).height;
+    return Math.max(itemWidth, itemWidth / width * height);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -57,11 +62,11 @@ export default class HomeScreen extends React.Component {
           numColumns={2}
           renderItem={this._renderItem}
           getHeightForItem={this._getHeightForItem}
-          refreshing={this.state.refreshing}
-          onRefresh={this.onRefreshing}
+          // refreshing={this.state.refreshing}
+          // onRefresh={this.onRefreshing}
           onEndReachedThreshold={0.5}
-          onEndReached={this._onEndReached}
-          keyExtractor={this._keyExtractor}
+          // onEndReached={this._onEndReached}
+          // keyExtractor={this._keyExtractor}
         />
       </View>
     );
@@ -100,4 +105,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'rgb(58, 45, 91)',
   },
+  item:{
+    margin:4
+  },
+  itemText: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    paddingHorizontal: 10, 
+    position: 'absolute', 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    height: 30, 
+    backgroundColor: '#0002', 
+    borderBottomLeftRadius: 4, 
+    borderBottomRightRadius: 4
+  }
 });

@@ -1,5 +1,7 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
@@ -16,7 +18,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <DrawNavigator/>
+      {/* <RootNavigator /> */}
     </NavigationContainer>
   );
 }
@@ -32,4 +35,14 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
+}
+const DrawStack = createDrawerNavigator<any>();
+
+function DrawNavigator(){
+  return(
+    <DrawStack.Navigator initialRouteName="Home">
+    <DrawStack.Screen name="Home" component={BottomTabNavigator} />
+    <DrawStack.Screen name="Notifications" component={NotFoundScreen}  options={{ title: 'Oops!' }}/>
+  </DrawStack.Navigator>
+  )
 }
